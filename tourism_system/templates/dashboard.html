@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="nav-container">
+        <h2 class="logo">Wanderlust</h2>
+
+        <div class="menu">
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/my-bookings">My Bookings</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<!-- DASHBOARD CONTENT -->
+<div class="container">
+
+    <div class="dashboard-header">
+        <h2>Admin Dashboard</h2>
+        <a href="/add">
+            <button>+ Add Package</button>
+        </a>
+    </div>
+
+    <div class="dashboard-grid">
+
+        {% for pkg in packages %}
+        <div class="dashboard-card">
+
+            <img src="{{ pkg.image_url }}">
+
+            <div class="dashboard-card-body">
+                <h3>{{ pkg.title }}</h3>
+                <p>{{ pkg.description }}</p>
+                <p class="price">BDT {{ pkg.price }}</p>
+
+                <button class="edit-btn"
+                    onclick="window.location.href='/edit/{{ pkg.id }}'">
+                    Edit
+                </button>
+
+                <button class="delete-btn"
+                    onclick="window.location.href='/delete/{{ pkg.id }}'">
+                    Delete
+                </button>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

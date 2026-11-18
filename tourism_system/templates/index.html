@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust | Explore</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="nav-container">
+
+        <!-- LOGO -->
+        <h2 class="logo">Wanderlust</h2>
+
+        <!-- HAMBURGER -->
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+        <!-- MENU -->
+        <div class="menu" id="menu">
+
+            <button class="dropbtn"><a href="/">Home</a></button>
+
+            <!-- DROPDOWN -->
+            <div class="dropdown">
+                <button class="dropbtn">Destinations ⬇</button>
+                <div class="dropdown-content">
+                    <a href="/?country=france">🇫🇷 France</a>
+                    <a href="/?country=indonesia">🇮🇩 Indonesia</a>
+                    <a href="/?country=usa">🇺🇸 USA</a>
+                </div>
+            </div>
+
+            {% if session.get('user_id') %}
+
+                <!-- PROFILE DROPDOWN -->
+                <div class="dropdown">
+                    <button class="profile-btn">
+                        👤 {{ session.get('username') }}
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="/dashboard">Dashboard</a>
+                        <a href="/my-bookings">My Bookings</a>
+                        <a href="/logout">🚪 Logout</a>
+                    </div>
+                </div>
+
+            {% else %}
+
+                <button class="dropbtn"><a href="/login">Login</a></button>
+                <button class="dropbtn"><a href="/register">Register</a></button>
+
+            {% endif %}
+
+            <!-- SEARCH -->
+            <form method="GET" action="/" >
+    <input  type="text" name="search" placeholder="Search packages...">
+    <button type="submit">Search</button>
+</form>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <h1>Find Your Next Adventure</h1>
+    <p>Handpicked tours at unbeatable prices</p>
+</header>
+
+<!-- MAIN -->
+<main class="container">
+
+    <h2>Popular Destinations</h2>
+
+    <div class="grid" id="packageGrid">
+        {% for pkg in packages %}
+        <div class="card">
+            <img src="{{ pkg.image_url }}" alt="{{ pkg.title }}">
+
+            <div class="card-content">
+                <h3>{{ pkg.title }}</h3>
+                <p>{{ pkg.description }}</p>
+                <p class="price">BDT {{ pkg.price }}</p>
+
+                <div class="payment-box">
+                    <label>Payment Method:</label>
+                    <select id="pay-{{ loop.index }}">
+                        <option>Credit Card</option>
+                        <option>GooglePay</option>
+                        <option>Cryptocurrency</option>
+                    </select>
+                </div>
+
+                <button onclick="window.location.href='/book/{{ pkg.id }}'">
+    Book Now
+</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <!-- 🔥 Fixed Price Itineraries (FIXED) -->
+<h2>Fixed Price Itineraries</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Destination</th>
+            <th>Duration</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for pkg in packages %}
+        <tr>
+            <td>{{ pkg.title }}</td>
+            <td>{{ pkg.duration }}</td>
+            <td>BDT {{ pkg.price }}</td>
+            <td>
+                <button onclick="window.location.href='/book/{{ pkg.id }}'">
+    Book Now
+</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    </div>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+<footer class="footer">
+    <div class="footer-container">
+
+        <!-- About -->
+        <div class="footer-box">
+            <h3>Wanderlust</h3>
+            <p>
+                Discover amazing destinations, book affordable tours, and
+                start your next adventure with us.
+            </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-box">
+            <h3>Quick Links</h3>
+            <a href="#">Home</a>
+            <a href="#">Destinations</a>
+            <a href="#">Pricing</a>
+            <a href="#">Contact</a>
+        </div>
+
+        <!-- Support -->
+        <div class="footer-box">
+            <h3>Support</h3>
+            <a href="#">FAQ</a>
+            <a href="#">Help Center</a>
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-box">
+            <h3>Contact</h3>
+            <p>Email: wanderlust555@gmail.com</p>
+            <p>Phone: +880 1234 567890</p>
+
+            <div class="social">
+                <span>🌐</span>
+                <span>📘</span>
+                <span>📸</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 Wanderlust. All Rights Reserved.</p>
+    </div>
+</footer>
+</html>

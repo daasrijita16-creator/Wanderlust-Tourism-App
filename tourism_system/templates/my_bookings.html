@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Bookings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="nav-container">
+        <h2 class="logo">Wanderlust</h2>
+
+        <div class="menu">
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/my-bookings">My Bookings</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<!-- BOOKINGS -->
+<div class="container">
+
+    <h2 style="text-align:center; color:#2c3e50;">
+        My Bookings
+    </h2>
+
+    <div class="booking-grid">
+
+        {% for b, p in bookings %}
+        <div class="booking-card">
+
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.description }}</p>
+
+            <p>💰 Price: <b>BDT {{ p.price }}</b></p>
+            <p>⏳ Duration: {{ p.duration }}</p>
+
+            <span class="status">Confirmed</span>
+
+            <!-- 🚨 CANCEL BUTTON -->
+            <br><br>
+            <a href="/cancel-booking/{{ b.id }}"
+               onclick="return confirm('Are you sure you want to cancel this booking?')">
+
+                <button style="background:#e74c3c;">
+                    Cancel Booking
+                </button>
+
+            </a>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
